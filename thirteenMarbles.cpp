@@ -11,6 +11,7 @@ void Directions();
 int computerPick(int);
 int humanPick(); 
 bool validPick(int);
+void turnDisplay(int, char);
 int main()
 {
 	int marbles;
@@ -22,11 +23,12 @@ int main()
 		marbles = 13;
 		human_pick = comp_pick = 0;
 		while(marbles > 0) { 
-			cout << "There are " << marbles << " Marbles left in the bag\n";
+			
 			marbles -= computerPick(human_pick);
 			if (marbles > 0) {
-				cout << "\nThere are " << marbles << " Marbles left in the bag\n";
+				turnDisplay(marbles, 'p');
 				marbles -=human_pick = humanPick();
+				turnDisplay(marbles, 'p');
 				cout << endl;
 			}			
 		}
@@ -41,27 +43,30 @@ int main()
 //////////////////////////////////////////////////////////
 int computerPick(int last_taken_human)
 {
-	
+	//let computer pick its goldfish
 	if(last_taken_human == 1) {
-		cout << "I THE MIGHTY COMPUTER have taken 3 Marbles from the bag\n";
+		turnDisplay(3, 'c');
 		return 3;
 		
 	} else if(last_taken_human == 2) {
-		cout << "I THE MIGHTY COMPUTER have taken 2 Marbles from the bag\n";
+		turnDisplay(2, 'c');
 		return 2;
 	} else {
-		cout << "I THE MIGHTY COMPUTER have taken 1 Marbles from the bag\n";
+		turnDisplay(1, 'c');
 		return 1;
-	}	
+	}
+	//make sure computer picks enough goldfish
+	//upt to 4 between this pick and human pick
+	
 }
-int humanPick() 
+int humanPick() // if a function has anything but a void it must return a value of that type
 {
 	int human_picked;
 	do{
-		cout << "How many Marbles would you like to take (1-3): ";
+		cout << "\nHow many Marbles would you like to take (1-3): ";
 		cin >> human_picked;
-	} while(!validPick(human_picked));
-	return human_picked; 
+	} while(!validPick(human_picked)); // you need to validatd the human pick each time they go
+	return human_picked; // returning value of type int as specified with int HumanPick
 }
 bool validPick(int marbles_picked)
 {
@@ -83,4 +88,11 @@ void Directions()
 		 << " from the bag wins the game.\n"
 		 << "One last thing, being the MIGHTY COMPUTER, I always go first.\n"
 		 << "Good Luck... you will need it. I never Lose!\n\n";
+}
+void turnDisplay(int marbles, char mode) {
+	if (mode == 'c') {
+		cout << "I THE MIGHTY COMPUTER have taken " << marbles << " Marbles from the bag\n";
+	} else {
+		cout << "There are " << marbles << " Marbles left in the bag\n";
+	}
 }
