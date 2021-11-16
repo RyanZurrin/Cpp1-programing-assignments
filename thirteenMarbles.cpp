@@ -65,11 +65,11 @@ int humanPick()
 }
 bool validPick(int marbles_picked)
 {
-	while (!cin || (marbles_picked > 3 && marbles_picked < 1))
+	while (!cin || (marbles_picked > 3 || marbles_picked < 1))
 	{
 		cin.clear();
 		cin.ignore(100,'\n');
-		cout << "Please pick between 1 and 3 marbles to remove from bag: ";
+		cout << "Please pick between 1 and 3 marbles to remove from bag\n";
 		return false;
 	}
 	return true;
