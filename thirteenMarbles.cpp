@@ -5,106 +5,76 @@ date: 			11/3/19
 assignment:		
 purpose:    
 *****************************************************************************/
-#include <iostream>
-
+#include<iostream>
 using namespace std;
-
-//function prototypes'
-void directons();
-int computerPick(int &, int &humPick);
-int humanPick(int &);
-bool validPick(int &);
-
+void Directions();
+int computerPick(int);
+int humanPick(); 
+bool validPick(int);
 int main()
 {
-	char rerun;
-	int marbles = 13;
-	int comPick,humPick;
+	int marbles;
+	int human_pick, comp_pick;
+	char replay;
 	
-	
-	directons();
-	do{
-		
-		cout << "\nThere are " << marbles << " marbles left in the bag\n";
-		cout << "I the MIGHTY COMPUTER have taken 1 marble(s) from the bag\n";
-			marbles = marbles - 1;
-			
-		do{
-			humanPick(marbles);
-			computerPick(marbles, humPick);	
-			
-					
-			
-		}while(marbles > 0);
-		cout << marbles << " marbles are left in the bag\n";
-		cout << "\nI the MIGHTY COMPUTER have WON the game again, bwaahaha!\n";
-		cout << "\nWould you like to try again(Y/n)?\n>";
+	Directions();
+	do {
 		marbles = 13;
-		
-		cin >> rerun;
-		
-	}while(rerun == 'Y' || rerun == 'y'); // allow game to rerun
-	return 0;
-	
-}
-/*****************************************************************************
-		Game Functions begin
-*****************************************************************************/
-int computerPick(int &marbles, int &humPick)
-{
-	int comPick;
-		
-	if (marbles == 11)
-		comPick = 3;
-		else if(marbles == 10)
-			comPick = 2;
-			else if(marbles == 9)
-				comPick = 1;
-				else if(marbles == 7)
-					comPick = 3;
-					else if(marbles == 6)
-						comPick = 2;
-						else if(marbles == 5)
-							comPick = 1;
-							else if(marbles == 3)
-								comPick = 3;
-								else if(marbles == 2)
-									comPick = 2;
-									else if(marbles == 1)
-										comPick = 1;
-	
-	marbles = marbles - comPick;
-	cout << "\nI the MIGHTY COMPUTER have chosen " << comPick << " marble(s)\n";  		
+		human_pick = comp_pick = 0;
+		while(marbles > 0) { 
+			cout << "There are " << marbles << " Marbles left in the bag\n";
+			marbles -= computerPick(human_pick);
+			if (marbles > 0) {
+				cout << "\nThere are " << marbles << " Marbles left in the bag\n";
+				marbles -=human_pick = humanPick();
+				cout << endl;
+			}			
+		}
+	cout << "The computer wins!\n\n";
+	cout << "Would you like to play again? [Y/y]\n>>";
+	cin >> replay;
+	} while(replay == 'Y' || replay == 'y');
 
+	cout << "thank you for playing, GoodBye!\n";
+	return 0;
 }
-//////////////////////////////////////////////////////////////////////////////
-int humanPick(int &marbles)
+//////////////////////////////////////////////////////////
+int computerPick(int last_taken_human)
 {
 	
-	int humPick;
-	cout << "\nThere are now " << marbles << " marbles left in bag\n"
-		 << "How many would you like to take (1 - 3)?: \n";   
-	cin >> humPick; 
-	validPick(humPick);	
-	marbles = marbles - humPick;	
-	cout << endl << "\nYou choose "<< humPick << " marble(s)"<< endl
-		 << "There are now "<< marbles <<  " marbles in the bag\n";
-	
-	
+	if(last_taken_human == 1) {
+		cout << "I THE MIGHTY COMPUTER have taken 3 Marbles from the bag\n";
+		return 3;
+		
+	} else if(last_taken_human == 2) {
+		cout << "I THE MIGHTY COMPUTER have taken 2 Marbles from the bag\n";
+		return 2;
+	} else {
+		cout << "I THE MIGHTY COMPUTER have taken 1 Marbles from the bag\n";
+		return 1;
+	}	
 }
-///////////////////////////////////////////////////////////////////////////////
-bool validPick(int &humPick)
+int humanPick() 
 {
-	while (!cin || humPick > 3 || humPick < 1)
+	int human_picked;
+	do{
+		cout << "How many Marbles would you like to take (1-3): ";
+		cin >> human_picked;
+	} while(!validPick(human_picked));
+	return human_picked; 
+}
+bool validPick(int marbles_picked)
+{
+	while (!cin || (marbles_picked > 3 && marbles_picked < 1))
 	{
 		cin.clear();
 		cin.ignore(100,'\n');
 		cout << "Please pick between 1 and 3 marbles to remove from bag: ";
-		cin >> humPick;
-	}	
+		return false;
+	}
+	return true;
 }
-///////////////////////////////////////////////////////////////////////////////
-void directons()
+void Directions()
 {
 	cout << "You have choosen to play 13 marbles with me the MIGHTY COMPUTER.\n"	
 		 << "The object of the game is to take 1, 2, or 3 marbles" 
@@ -112,21 +82,5 @@ void directons()
 		 << "The player that removes the last marble or marbles" 
 		 << " from the bag wins the game.\n"
 		 << "One last thing, being the MIGHTY COMPUTER, I always go first.\n"
-		 << "Good Luck... you will need it. I never Lose!\n";			
+		 << "Good Luck... you will need it. I never Lose!\n\n";
 }
-/////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
